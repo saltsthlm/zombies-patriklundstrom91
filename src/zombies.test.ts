@@ -3,10 +3,12 @@ import { test } from "node:test";
 
 const createRoom = (capacity: number) => {
   const _capacity = capacity;
-
-  return {
+  let zombies: string[] = [];
+  return { addZombie(zombie: string){
+    zombies.push(zombie);
+  },
     isFull: () => {
-      if (_capacity > 0) {
+      if (_capacity > zombies.length) {
         return false;
       } else {
         return true;
@@ -37,7 +39,13 @@ test("room with no capacity cannot fit any zombies", () => {
   ok(isRoomFull);
 });
 
-test.skip("one-roomer becomes full when a zombie is added", () => {});
+test("one-roomer becomes full when a zombie is added", () => {
+  const room = createRoom(1);
+  room.addZombie("z1");
+  const isRoomFull = room.isFull();
+
+  ok(isRoomFull);
+});
 
 test.skip("two-roomer is not full when a zombie is added", () => {});
 
