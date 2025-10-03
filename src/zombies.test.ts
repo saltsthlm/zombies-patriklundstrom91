@@ -5,7 +5,13 @@ const createRoom = (capacity: number) => {
   const _capacity = capacity;
 
   return {
-    isFull: () => true,
+    isFull: () => {
+      if (_capacity > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
   };
 };
 
@@ -17,7 +23,12 @@ test("room is full", () => {
   ok(isRoomFull);
 });
 
-test.skip("empty room that fits one zombie is not full", () => {});
+test("empty room that fits one zombie is not full", () => {
+  const room = createRoom(1);
+  const isRoomFull = room.isFull();
+
+  ok(!isRoomFull);
+});
 
 test.skip("room with no capacity cannot fit any zombies", () => {});
 
